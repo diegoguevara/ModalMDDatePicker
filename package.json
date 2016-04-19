@@ -1,0 +1,30 @@
+{
+  "name": "modalmddatepicker",
+  "version": "1.0.0",
+  "description": "Angular Material Datepicker Component",
+  "main": "modal-md-datepicker.min.js",
+  "scripts": {
+    "postinstall": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegoguevara/ModalMDDatePicker.git"
+  },
+  "keywords": [
+    "angular",
+    "material",
+    "datepicker",
+    "md"
+  ],
+  "author": "Diego Guevara",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diegoguevara/ModalMDDatePicker/issues"
+  },
+  "homepage": "https://github.com/diegoguevara/ModalMDDatePicker#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.3"
+  }
+}
