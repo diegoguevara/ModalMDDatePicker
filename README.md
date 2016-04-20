@@ -3,19 +3,19 @@ Angular Material Design DatePicker Component
 
 ## Installing
 
-1. bower
+### bower
 
 ```sh
     bower install ModalMDDatePicker --save
 ```
 
-1. Add library in page
+### Add library in page
 
 ```html
 <script src="bower_components/ModalMDDatePicker/modal-md-datepicker.min.js"></script>
 ```
 
-2. Include directives in angular app
+### Include directives in angular app
 
 `mdThemeColors`
 
