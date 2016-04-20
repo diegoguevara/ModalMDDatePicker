@@ -3,7 +3,7 @@
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
 * Updated 2016.04
-* version 1.0.1
+* version 1.0.2
 */
 
 
