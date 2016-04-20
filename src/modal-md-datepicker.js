@@ -152,7 +152,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           font-size: 11px !important;\
           box-sizing: border-box !important;\
           text-align: center !important;\
-          color: #a0a0a0 !important;\
+          color: #a0a0a0 ;\
           width: 2.77rem !important;\
         }\
         .modal-md-dp-daybtn\
@@ -165,7 +165,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           color: #fff !important;\
         }\
         .modal-md-dp-daybtn.today {\
-          color: {{mdThemeColors.primary[\'500\']}} !important;\
+          color: {{mdThemeColors.primary[\'500\']}} ;\
         }\
         .modal-md-dp-daybtn {\
           float: left !important;\

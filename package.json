@@ -1,10 +1,10 @@
 {
   "name": "modalmddatepicker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Angular Material Datepicker Component",
   "main": "modal-md-datepicker.min.js",
   "scripts": {
-    "postinstall": "gulp build"
+    
   },
   "repository": {
     "type": "git",
