@@ -1,31 +1,33 @@
 /*!
 * @(#)Modal MD Datepicker.js
-* @author: Diego Guevara - github.com/diegoguevara
-* Created: 2016.04
+* @author Diego Guevara - github.com/diegoguevara
+* Created 2016.04
+* Updated 2016.04
+* version 1.0.1
 */
 
 
-var mdThemeColors = angular.module('mdThemeColors', ['ngMaterial']).config(['$provide', '$mdThemingProvider', function($provide, $mdThemingProvider) {
+var mdThemeColors = angular.module('mdThemeColors', ['ngMaterial']).config(['$provide', '$mdThemingProvider', function ($provide, $mdThemingProvider) {
   var colorStore = {};
   Object.keys($mdThemingProvider._PALETTES).forEach(
-    function(palleteName) {
+    function (palleteName) {
       var pallete = $mdThemingProvider._PALETTES[palleteName];
       var colors = [];
       colorStore[palleteName] = colors;
-      Object.keys(pallete).forEach(function(colorName) {
+      Object.keys(pallete).forEach(function (colorName) {
         if (/#[0-9A-Fa-f]{6}|0-9A-Fa-f]{8}\b/.exec(pallete[colorName])) {
           colors[colorName] = pallete[colorName];
         }
       });
     });
 
-  
+
   $provide.factory('mdThemeColors', [
-    function() {
+    function () {
       var service = {};
 
-      var getColorFactory = function(intent) {
-        return function() {
+      var getColorFactory = function (intent) {
+        return function () {
           var colors = $mdThemingProvider._THEMES['default'].colors[intent];
           var name = colors.name
 
@@ -37,7 +39,7 @@ var mdThemeColors = angular.module('mdThemeColors', ['ngMaterial']).config(['$pr
         }
       }
 
-      
+
       Object.defineProperty(service, 'primary', {
         get: getColorFactory('primary')
       });
@@ -56,18 +58,18 @@ var mdThemeColors = angular.module('mdThemeColors', ['ngMaterial']).config(['$pr
 
       return service;
     }
-    ]);
+  ]);
 }]);
 
 var ModalDatePicker = angular.module('ModalDatePicker', ['ngMaterial', 'mdThemeColors']);
-ModalDatePicker.factory('ModalDatePickerCount', function() {
+ModalDatePicker.factory('ModalDatePickerCount', function () {
   var instanceCount = 0;
 
-  var _Increment = function() {
+  var _Increment = function () {
     instanceCount++;
   }
 
-  var _GetCount = function() {
+  var _GetCount = function () {
     return instanceCount;
   }
 
@@ -77,7 +79,7 @@ ModalDatePicker.factory('ModalDatePickerCount', function() {
   }
 });
 
-ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDialog, $compile, mdThemeColors, $mdMedia, ModalDatePickerCount) {
+ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdDialog, $compile, mdThemeColors, $mdMedia, ModalDatePickerCount) {
   return {
     restrict: 'E',
     replace: false,
@@ -92,7 +94,7 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
     <label ng-attr-for="modal-md-dp-directive-{{serial}}">{{placeholder}}</label>\
     <input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" />\
     </md-input-container>',
-    link: function($scope, $element, $attr, $ctrl) {
+    link: function ($scope, $element, $attr, $ctrl) {
       function formatter(value) {
         if (value) {
           return value;
@@ -112,46 +114,46 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
 
 
 
-        var styleText ='.modal-md-dp-input{\
+        var styleText = '.modal-md-dp-input{\
           border : 0 !important;\
-          width: 4.3rem;\
-          font-weight: 700;\
-          font-size: 14px;\
+          width: 4.3rem !important;\
+          font-weight: 700 !important;\
+          font-size: 14px !important;\
         }\
         .modal-md-dp-select-month{\
-          position: relative;\
-          cursor: pointer;\
-          font-weight: 700;\
-          font-size: 14px;\
+          position: relative !important;\
+          cursor: pointer !important;\
+          font-weight: 700 !important;\
+          font-size: 14px !important;\
         }\
         .modal-md-dp-select-month select {\
-          position: absolute;\
-          top: 0px;\
-          left: 0px;\
-          bottom: 0px;\
-          right: 0px;\
-          opacity: 0;\
-          width: 100%;\
+          position: absolute !important;\
+          top: 0px !important;\
+          left: 0px !important;\
+          bottom: 0px !important;\
+          right: 0px !important;\
+          opacity: 0 !important;\
+          width: 100% !important;\
         }\
         .modal-md-dp-month-year-separator{\
           margin-left : 5px !important;\
         }\
         div.weekdayheader {\
-          font-weight: 500;\
-          text-align: left;\
-          height: 1.6rem;\
-          box-sizing: border-box;\
+          font-weight: 500 !important;\
+          text-align: left !important;\
+          height: 1.6rem !important;\
+          box-sizing: border-box !important;\
         }\
         div.weekdaylabel {\
-          height: 1.6rem;\
-          float: left;\
-          padding: 0 0;\
-          border-radius: 3rem;\
-          font-size: 11px;\
-          box-sizing: border-box;\
-          text-align: center;\
-          color: #a0a0a0;\
-          width: 2.77rem;\
+          height: 1.6rem !important;\
+          float: left !important;\
+          padding: 0 0 !important;\
+          border-radius: 3rem !important;\
+          font-size: 11px !important;\
+          box-sizing: border-box !important;\
+          text-align: center !important;\
+          color: #a0a0a0 !important;\
+          width: 2.77rem !important;\
         }\
         .modal-md-dp-daybtn\
         .md-button.modal-md-dp-daybtn:hover {\
@@ -163,34 +165,31 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
           color: #fff !important;\
         }\
         .modal-md-dp-daybtn.today {\
-          color: {{mdThemeColors.primary[\'500\']}};\
+          color: {{mdThemeColors.primary[\'500\']}} !important;\
         }\
         .modal-md-dp-daybtn {\
-          float: left;\
-          line-height: 2rem;\
-          min-width: 0;\
-          border-radius: 2rem;\
-          font-weight: 700;\
-          min-height: inherit;\
-          overflow: visible;\
-          width: 2.5rem;\
-          height: 2.5rem;\
-          margin: 0 0.15rem 0 0.1rem;\
-          font-size: 0.75rem;\
+          float: left !important;\
+          line-height: 2rem !important;\
+          min-width: 0 !important;\
+          border-radius: 2rem !important;\
+          font-weight: 700 !important;\
+          min-height: inherit !important;\
+          overflow: visible !important;\
+          width: 2.5rem !important;\
+          height: 2.5rem !important;\
+          margin: 0 0.15rem 0 0.1rem !important;\
+          font-size: 0.75rem !important;\
         }\
         .modal-md-dp-daybtn.firstday {\
-          margin-left: 16.6rem;\
+          margin-left: 16.6rem !important;\
         }\
         .modal-md-dp-modal{\
           max-width:320px !important;\
         }\
         ';
-
-
-
+        
         style.text(styleText);
-
-
+        
         head.append(style);
 
         $compile(head.contents())($scope);
@@ -207,11 +206,11 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
 
       $scope.mdThemeColors = mdThemeColors;
 
-      $scope.$watch('ngModel', function(newValue) {
+      $scope.$watch('ngModel', function (newValue) {
         $scope.SelectedDate = $scope.ngModel;
       }, true);
 
-      $scope.$watch('SelectedDate', function(newValue) {
+      $scope.$watch('SelectedDate', function (newValue) {
         if (newValue != null) {
           $scope.SelectedDateText = $filter('date')(newValue, 'M/d/yyyy');
         } else {
@@ -219,11 +218,11 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
         }
       }, true);
 
-      $scope.showModalDatePicker = function($event, startval) {
+      $scope.showModalDatePicker = function ($event, startval) {
         $event.preventDefault();
         if ($scope.ngDisabled) return;
 
-        var dlgCtrl = function($scope, $mdDialog, dlgOrientation, serial) {
+        var dlgCtrl = function ($scope, $mdDialog, dlgOrientation, serial) {
           if (startval == null) startval = new Date();
           $scope.DialogSelectedDate = startval;
           $scope.originalOrientation = dlgOrientation;
@@ -232,7 +231,7 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
           $scope.originalOrientation = 'portrait';
           $scope.orientation = 'portrait';
 
-          $scope.$watch(function() {
+          $scope.$watch(function () {
             return $mdMedia('(max-width: 655px)');
           }, function (isSmall) {
             if (isSmall) {
@@ -243,53 +242,53 @@ ModalDatePicker.directive('modalMdDatepicker', function($timeout, $filter, $mdDi
             }
           });
 
-          $scope.NowClick = function($event) {
+          $scope.NowClick = function ($event) {
             $event.preventDefault();
 
-            $timeout(function() {
+            $timeout(function () {
               $scope.DialogSelectedDate = new Date();
             });
           };
 
-          $scope.CancelClick = function($event) {
+          $scope.CancelClick = function ($event) {
             $event.preventDefault();
 
             $mdDialog.cancel();
           };
 
-          $scope.SaveClick = function($event) {
+          $scope.SaveClick = function ($event) {
             $event.preventDefault();
 
             $mdDialog.hide($scope.DialogSelectedDate);
           };
-      };
+        };
 
-    var dlgOpts = {
-      template: '<md-dialog class="modal-md-dp-modal" ng-attr-id="mddpdlg-{{serial}}">\
+        var dlgOpts = {
+          template: '<md-dialog class="modal-md-dp-modal" ng-attr-id="mddpdlg-{{serial}}">\
       <div class="popupDialogContent" style="overflow:hidden">\
       <modal-md-datepicker-calendar ng-model="DialogSelectedDate" submitclick="SaveClick" cancelclick="CancelClick"></modal-md-datepicker-calendar>\
       </div>\
       </md-dialog>',
-      controller: dlgCtrl,
-      targetEvent: $event,
-      locals: {
-        dlgOrientation: $scope.orientation,
-        serial: $scope.serial
-      },
-      onComplete: function () {
-        document.getElementById('mddpdlg-' + $scope.serial).focus();
-      }
-    };
+          controller: dlgCtrl,
+          targetEvent: $event,
+          locals: {
+            dlgOrientation: $scope.orientation,
+            serial: $scope.serial
+          },
+          onComplete: function () {
+            document.getElementById('mddpdlg-' + $scope.serial).focus();
+          }
+        };
 
-    $mdDialog.show(dlgOpts).then(function(answer) {
-      $scope.ngModel = answer;
-    });
+        $mdDialog.show(dlgOpts).then(function (answer) {
+          $scope.ngModel = answer;
+        });
+      }
+    }
   }
-}
-}
 });
 
-ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 'mdThemeColors', '$mdMedia', function($timeout, $compile, mdThemeColors, $mdMedia) {
+ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 'mdThemeColors', '$mdMedia', function ($timeout, $compile, mdThemeColors, $mdMedia) {
   return {
     restrict: 'E',
     replace: false,
@@ -301,179 +300,179 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       submitclick: '&',
       cancelclick: '&'
     },
-    link: function($scope, $element, $attr, $ctrl) {
+    link: function ($scope, $element, $attr, $ctrl) {
       $scope.serial = Math.floor(Math.random() * 10000000000000000);
 
-      $scope.CalculateMonth = function() {
+      $scope.CalculateMonth = function () {
         var tempday = new Date($scope.selYear, $scope.selMonth, 1);
         var fday = tempday.getDay();
         var ldaynum = new Date($scope.selYear, $scope.selMonth + 1, 0).getDate();
-        
+
         $scope.selFirstDayOfMonth = fday;
         $scope.selLastDateOfMonth = ldaynum;
-        
+
         var selbtn = document.querySelector('.jmddp-' + $scope.serial + ' [Day="' + $scope.selDay + '"]');
         var btn = angular.element(selbtn);
         if (!btn.hasClass('md-button')) btn = btn.parent();
 
         btn.addClass('selected');
-        
+
         if ($scope.selButton != null && $scope.selButton[0] != btn[0]) {
           $scope.selButton.removeClass('selected');
         }
         $scope.selButton = btn;
 
-    // If the currently selected month and year match today's month and year, ensure that the matching day button has the 'today' class; otherwise, remove it.
-    var todaybtn = angular.element(document.querySelector('.jmddp-' + $scope.serial + ' [Day="' + $scope.todaysDate + '"]'));
-    if ($scope.todaysMonth == $scope.selMonth && $scope.todaysYear == $scope.selYear) {
-      todaybtn.addClass('today');
-    } else {
-      todaybtn.removeClass('today');
-    }
-  };
+        // If the currently selected month and year match today's month and year, ensure that the matching day button has the 'today' class; otherwise, remove it.
+        var todaybtn = angular.element(document.querySelector('.jmddp-' + $scope.serial + ' [Day="' + $scope.todaysDate + '"]'));
+        if ($scope.todaysMonth == $scope.selMonth && $scope.todaysYear == $scope.selYear) {
+          todaybtn.addClass('today');
+        } else {
+          todaybtn.removeClass('today');
+        }
+      };
 
-  $scope.mdThemeColors = mdThemeColors;
-  $scope.Today = new Date();
-  $scope.todaysDate = $scope.Today.getDate();
-  $scope.todaysMonth = $scope.Today.getMonth();
-  $scope.todaysYear = $scope.Today.getFullYear();
+      $scope.mdThemeColors = mdThemeColors;
+      $scope.Today = new Date();
+      $scope.todaysDate = $scope.Today.getDate();
+      $scope.todaysMonth = $scope.Today.getMonth();
+      $scope.todaysYear = $scope.Today.getFullYear();
 
-  if ($scope.ngModel == null) $scope.ngModel = $scope.Today;
-  $scope.selDate = $scope.ngModel;
-  $scope.selMonth = $scope.selDate.getMonth();
-  $scope.selDay = $scope.selDate.getDate();
-  $scope.selYear = $scope.selDate.getFullYear();
-  $scope.selButton = null;
+      if ($scope.ngModel == null) $scope.ngModel = $scope.Today;
+      $scope.selDate = $scope.ngModel;
+      $scope.selMonth = $scope.selDate.getMonth();
+      $scope.selDay = $scope.selDate.getDate();
+      $scope.selYear = $scope.selDate.getFullYear();
+      $scope.selButton = null;
 
-  $scope.CalculateMonth();
+      $scope.CalculateMonth();
 
-  if ($scope.orientation == null) $scope.orientation = 'portrait';
+      if ($scope.orientation == null) $scope.orientation = 'portrait';
 
-  $scope.Months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  $scope.ShortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      $scope.Months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      $scope.ShortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
 
-  $scope.DayClick = function($event, day) {
-    $event.preventDefault();
+      $scope.DayClick = function ($event, day) {
+        $event.preventDefault();
 
-    var btn = angular.element($event.srcElement);
-    if (!btn.hasClass('md-button')) btn = btn.parent();
+        var btn = angular.element($event.srcElement);
+        if (!btn.hasClass('md-button')) btn = btn.parent();
 
-    btn.addClass('selected');
+        btn.addClass('selected');
 
-    if ($scope.selButton != null) {
-      $scope.selButton.removeClass('selected');
-    }
-    $scope.selButton = btn;
+        if ($scope.selButton != null) {
+          $scope.selButton.removeClass('selected');
+        }
+        $scope.selButton = btn;
 
-    $scope.selDate = new Date($scope.selYear, $scope.selMonth, day);
-    $scope.selYear = $scope.selDate.getFullYear();
-    $scope.selMonth = $scope.selDate.getMonth();
-    $scope.selDay = $scope.selDate.getDate();
+        $scope.selDate = new Date($scope.selYear, $scope.selMonth, day);
+        $scope.selYear = $scope.selDate.getFullYear();
+        $scope.selMonth = $scope.selDate.getMonth();
+        $scope.selDay = $scope.selDate.getDate();
 
-    $scope.ngModel = $scope.selDate;
+        $scope.ngModel = $scope.selDate;
 
-    $timeout(function() {
-      $scope.submitclick()($event, $scope.selDate);
-    });
+        $timeout(function () {
+          $scope.submitclick()($event, $scope.selDate);
+        });
 
-  };
+      };
 
-  $scope.NowClick = function($event) {
-    $event.preventDefault();
+      $scope.NowClick = function ($event) {
+        $event.preventDefault();
 
-    $scope.selDate = new Date();
-    $scope.selYear = $scope.selDate.getFullYear();
-    $scope.selMonth = $scope.selDate.getMonth();
-    $scope.selDay = $scope.selDate.getDate();
+        $scope.selDate = new Date();
+        $scope.selYear = $scope.selDate.getFullYear();
+        $scope.selMonth = $scope.selDate.getMonth();
+        $scope.selDay = $scope.selDate.getDate();
 
-    $scope.CalculateMonth($scope.selMonth);
-  };
+        $scope.CalculateMonth($scope.selMonth);
+      };
 
-  $scope.OKClick = function($event) {
-    $scope.submitclick()($event, $scope.selDate);
-  };
+      $scope.OKClick = function ($event) {
+        $scope.submitclick()($event, $scope.selDate);
+      };
 
-  $scope.CancelClick = function($event) {
-    $scope.cancelclick()($event);
-  };
+      $scope.CancelClick = function ($event) {
+        $scope.cancelclick()($event);
+      };
 
-  $scope.$watch('ngModel', function(newValue) {
-    if (newValue == null) return;
-    $scope.selDate = newValue;
-    $scope.selYear = $scope.selDate.getFullYear();
-    $scope.selMonth = $scope.selDate.getMonth();
-    $scope.selDay = $scope.selDate.getDate();
+      $scope.$watch('ngModel', function (newValue) {
+        if (newValue == null) return;
+        $scope.selDate = newValue;
+        $scope.selYear = $scope.selDate.getFullYear();
+        $scope.selMonth = $scope.selDate.getMonth();
+        $scope.selDay = $scope.selDate.getDate();
 
-    $timeout(function() {
-      $scope.CalculateMonth($scope.selMonth);
-    });
-  });
+        $timeout(function () {
+          $scope.CalculateMonth($scope.selMonth);
+        });
+      });
 
-  $scope.$watch('selMonth', function(newValue) {
-    $scope.selDate = new Date($scope.selYear, $scope.selMonth, $scope.selDay);
-    $scope.CalculateMonth($scope.selMonth);
-  });
+      $scope.$watch('selMonth', function (newValue) {
+        $scope.selDate = new Date($scope.selYear, $scope.selMonth, $scope.selDay);
+        $scope.CalculateMonth($scope.selMonth);
+      });
 
-  $scope.$watch('selYear', function(newValue) {
-    $scope.selDate = new Date($scope.selYear, $scope.selMonth, $scope.selDay);
+      $scope.$watch('selYear', function (newValue) {
+        $scope.selDate = new Date($scope.selYear, $scope.selMonth, $scope.selDay);
 
-    $scope.CalculateMonth($scope.selMonth);
-  });
+        $scope.CalculateMonth($scope.selMonth);
+      });
 
-  $scope.currentOrientation = ($mdMedia('(max-width: 655px)') ? 'portrait' : $scope.orientation);
-  $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
-  $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
-
-  $scope.$watch(function() {
-    return $mdMedia('(max-width: 655px)');
-  }, function (isSmall) {
-    if (isSmall) {
-        // In small profile, will be portrait no matter what was originally specified
-        $scope.currentOrientation = 'portrait';
-      } else {
-        $scope.currentOrientation = $scope.orientation;
-      }
+      $scope.currentOrientation = ($mdMedia('(max-width: 655px)') ? 'portrait' : $scope.orientation);
       $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
       $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
-    });
 
-  $scope.BackMonth = function($event) {
-    $event.preventDefault();
+      $scope.$watch(function () {
+        return $mdMedia('(max-width: 655px)');
+      }, function (isSmall) {
+        if (isSmall) {
+          // In small profile, will be portrait no matter what was originally specified
+          $scope.currentOrientation = 'portrait';
+        } else {
+          $scope.currentOrientation = $scope.orientation;
+        }
+        $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
+        $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
+      });
 
-    var newm = $scope.selMonth - 1;
-    var newy = $scope.selYear;
+      $scope.BackMonth = function ($event) {
+        $event.preventDefault();
 
-    if (newm < 0) {
-      newm += 12;
-      newy--;
-    }
+        var newm = $scope.selMonth - 1;
+        var newy = $scope.selYear;
 
-    $scope.selMonth = newm;
-    $scope.selYear = newy;
+        if (newm < 0) {
+          newm += 12;
+          newy--;
+        }
 
-    $scope.CalculateMonth($scope.selMonth);
-  };
+        $scope.selMonth = newm;
+        $scope.selYear = newy;
 
-  $scope.ForwardMonth = function($event) {
-    $event.preventDefault();
+        $scope.CalculateMonth($scope.selMonth);
+      };
 
-    var newm = $scope.selMonth + 1;
-    var newy = $scope.selYear;
+      $scope.ForwardMonth = function ($event) {
+        $event.preventDefault();
 
-    if (newm >= 12) {
-      newm %= 12;
-      newy++;
-    }
+        var newm = $scope.selMonth + 1;
+        var newy = $scope.selYear;
 
-    $scope.selMonth = newm;
-    $scope.selYear = newy;
+        if (newm >= 12) {
+          newm %= 12;
+          newy++;
+        }
 
-    $scope.CalculateMonth($scope.selMonth);
-  };
+        $scope.selMonth = newm;
+        $scope.selYear = newy;
+
+        $scope.CalculateMonth($scope.selMonth);
+      };
       // 
       // <div class="datelabel">{{selDate | amDateFormat:\'ddd, MMM d\'}}</div>\
-      var _BuildCalendar = function() {
+      var _BuildCalendar = function () {
         var caltext = '\
         <div layout="column" class="jmddp-'+ $scope.serial + '" >\
         <md-toolbar>\

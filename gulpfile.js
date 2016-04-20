@@ -5,6 +5,7 @@
 */
 
 var gulp       = require( 'gulp' );
+var ngAnnotate = require( 'gulp-ng-annotate' );
 var uglify     = require( 'gulp-uglify' );
 var rename     = require( 'gulp-rename' );
 
@@ -14,7 +15,8 @@ var rename     = require( 'gulp-rename' );
  */
 gulp.task( 'build', function() {
   return gulp.src('src/*.js')
-    .pipe( uglify({preserveComments : 'license'}) )
+  	.pipe( ngAnnotate() )
+    .pipe( uglify({preserveComments : 'license', mangle: false}) )
     .pipe(rename({
       suffix: '.min'
     }))
