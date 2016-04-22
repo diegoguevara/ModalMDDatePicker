@@ -1,0 +1,74 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+</head>
+<body ng-app="app" ng-controller="testCtrl" ng-cloak layout="column" class="md-padding" >
+    
+    <div>
+        
+    </div>
+    <div layout="row" layout-align="center center">
+        <md-card flex="50">
+            <md-card-title>
+                <h3> ModalMDDatepicker Example</h3>
+            </md-card-title>
+            <md-card-content >
+                <div layout="column">
+                    <div >
+                        <md-input-container class="md-block" flex-gt-xs>
+                            <label>First Name</label>
+                            <input ng-model="user.name" >
+                        </md-input-container>
+                    </div>
+                    
+                    <div >
+                        <modal-md-datepicker flex ng-model="user.start_date" placeholder="Select start date"></modal-md-datepicker>
+                    </div>
+                    <div >
+                        <modal-md-datepicker flex ng-model="user.end_date" placeholder="Select end date"></modal-md-datepicker>
+                    </div>
+                    
+                    <div layout="row" layout-align="center center">
+                        <md-button class="md-primary md-raised"> Save </md-button>
+                    </div>
+                </div>
+                
+                <div layout="row">
+                    
+                </div>
+                
+                
+            </md-card-content>
+        </md-card>
+    </div>
+  </div>
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+  
+  <script src="../src/modal-md-datepicker.js"></script>
+  
+  <!-- Your application bootstrap  -->
+  <script type="text/javascript">    
+    var app_ = angular.module('app',['ngMaterial', 'mdThemeColors', 'ModalDatePicker']);
+
+
+    app_.controller('testCtrl', function ( $scope, $http ){
+	
+    });
+  </script>
+  
+</body>
+</html>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->

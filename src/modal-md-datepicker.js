@@ -3,7 +3,7 @@
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
 * Updated 2016.04
-* version 1.0.2
+* version 1.0.4
 */
 
 
@@ -90,7 +90,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       placeholder: '@',
       orientation: '@'
     },
-    template: '<md-input-container md-no-float>\
+    template: '<md-input-container class="md-block"  md-no-float>\
     <label ng-attr-for="modal-md-dp-directive-{{serial}}">{{placeholder}}</label>\
     <input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" />\
     </md-input-container>',
@@ -168,23 +168,34 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           color: {{mdThemeColors.primary[\'500\']}} ;\
         }\
         .modal-md-dp-daybtn {\
-          float: left !important;\
-          line-height: 2rem !important;\
-          min-width: 0 !important;\
-          border-radius: 2rem !important;\
-          font-weight: 700 !important;\
-          min-height: inherit !important;\
-          overflow: visible !important;\
-          width: 2.5rem !important;\
-          height: 2.5rem !important;\
-          margin: 0 0.15rem 0 0.1rem !important;\
-          font-size: 0.75rem !important;\
+          float: left ;\
+          line-height: 2rem ;\
+          min-width: 0 ;\
+          border-radius: 2rem ;\
+          font-weight: 700 ;\
+          min-height: inherit ;\
+          overflow: visible ;\
+          width: 2.5rem ;\
+          height: 2.5rem ;\
+          margin: 0 0.15rem 0 0.1rem ;\
+          font-size: 0.75rem ;\
         }\
         .modal-md-dp-daybtn.firstday {\
-          margin-left: 16.6rem !important;\
+          margin-left: 16.6rem ;\
         }\
         .modal-md-dp-modal{\
           max-width:320px !important;\
+        }\
+        div.masterdatepicker {\
+          height: 392px;\
+        }\
+        div.monthpanel {\
+          position: relative;\
+          font-size: 1rem;\
+          margin-top: -0.1rem;\
+          box-sizing: border-box;\
+          top: 7px;\
+	        height: 16.2rem;\
         }\
         ';
         
@@ -474,7 +485,7 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       // <div class="datelabel">{{selDate | amDateFormat:\'ddd, MMM d\'}}</div>\
       var _BuildCalendar = function () {
         var caltext = '\
-        <div layout="column" class="jmddp-'+ $scope.serial + '" >\
+        <div layout="column" class="masterdatepicker jmddp-'+ $scope.serial + '" >\
         <md-toolbar>\
         <div class="md-toolbar-tools1 md-padding" layout="column" >\
         <div class="md-subhead">{{selYear}}</div>\
