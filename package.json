@@ -1,6 +1,6 @@
 {
   "name": "modalmddatepicker",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Angular Material Datepicker Component",
   "main": "modal-md-datepicker.min.js",
   "scripts": {
