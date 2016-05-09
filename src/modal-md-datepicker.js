@@ -2,8 +2,8 @@
 * @(#)Modal MD Datepicker.js
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
-* Updated 2016.04
-* version 1.0.4
+* Updated 2016.05
+* version 1.0.5
 */
 
 
@@ -88,12 +88,12 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       ngModel: '=',
       ngDisabled: '=',
       placeholder: '@',
-      orientation: '@'
+      orientation: '@',
+      dateFormat: '@',
+      minDate: '@',
+      maxDate: '@'
     },
-    template: '<md-input-container class="md-block"  md-no-float>\
-    <label ng-attr-for="modal-md-dp-directive-{{serial}}">{{placeholder}}</label>\
-    <input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" />\
-    </md-input-container>',
+    template: '<input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" />',
     link: function ($scope, $element, $attr, $ctrl) {
       function formatter(value) {
         if (value) {
@@ -167,6 +167,9 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
         .modal-md-dp-daybtn.today {\
           color: {{mdThemeColors.primary[\'500\']}} ;\
         }\
+        .modal-md-dp-daybtn.disabled {\
+          color: #eee !important;\
+        }\
         .modal-md-dp-daybtn {\
           float: left ;\
           line-height: 2rem ;\
@@ -223,7 +226,11 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
 
       $scope.$watch('SelectedDate', function (newValue) {
         if (newValue != null) {
-          $scope.SelectedDateText = $filter('date')(newValue, 'M/d/yyyy');
+          //$scope.SelectedDateText = $filter('date')(newValue, 'M/d/yyyy');
+          if( !$attr.dateFormat ){
+            $attr.dateFormat = 'M/d/yyyy';
+          }
+          $scope.SelectedDateText = $filter('date')(newValue, $attr.dateFormat);
         } else {
           $scope.SelectedDateText = null;
         }
@@ -238,21 +245,9 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           $scope.DialogSelectedDate = startval;
           $scope.originalOrientation = dlgOrientation;
           $scope.serial = serial;
-          $scope.currentOrientation = 'portrait';
-          $scope.originalOrientation = 'portrait';
-          $scope.orientation = 'portrait';
-
-          $scope.$watch(function () {
-            return $mdMedia('(max-width: 655px)');
-          }, function (isSmall) {
-            if (isSmall) {
-              // In small profile, will be portrait no matter what was originally specified
-              $scope.currentOrientation = 'portrait';
-            } else {
-              $scope.currentOrientation = $scope.originalOrientation;
-            }
-          });
-
+          $scope.minDate = $attr.minDate;
+          $scope.maxDate = $attr.maxDate;
+          
           $scope.NowClick = function ($event) {
             $event.preventDefault();
 
@@ -277,7 +272,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
         var dlgOpts = {
           template: '<md-dialog class="modal-md-dp-modal" ng-attr-id="mddpdlg-{{serial}}">\
       <div class="popupDialogContent" style="overflow:hidden">\
-      <modal-md-datepicker-calendar ng-model="DialogSelectedDate" submitclick="SaveClick" cancelclick="CancelClick"></modal-md-datepicker-calendar>\
+      <modal-md-datepicker-calendar ng-model="DialogSelectedDate" submitclick="SaveClick" cancelclick="CancelClick" min-date="{{minDate}}" max-date="{{maxDate}}"></modal-md-datepicker-calendar>\
       </div>\
       </md-dialog>',
           controller: dlgCtrl,
@@ -309,7 +304,9 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       ngModel: '=',
       orientation: '@',
       submitclick: '&',
-      cancelclick: '&'
+      cancelclick: '&',
+      minDate : '@',
+      maxDate : '@'
     },
     link: function ($scope, $element, $attr, $ctrl) {
       $scope.serial = Math.floor(Math.random() * 10000000000000000);
@@ -318,7 +315,15 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         var tempday = new Date($scope.selYear, $scope.selMonth, 1);
         var fday = tempday.getDay();
         var ldaynum = new Date($scope.selYear, $scope.selMonth + 1, 0).getDate();
-
+        //console.log( tempday.getTime()  ) ;
+        
+        // $attr.minDate = $attr.minDate.replace(/['"]+/g, '')
+        // console.log( $attr.minDate );
+        // var ttaa = Date.parse($attr.minDate);
+        // console.log( ttaa )
+        // console.log('aa')
+        // console.log($attr.minDate)
+        
         $scope.selFirstDayOfMonth = fday;
         $scope.selLastDateOfMonth = ldaynum;
 
@@ -327,6 +332,8 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         if (!btn.hasClass('md-button')) btn = btn.parent();
 
         btn.addClass('selected');
+        btn.addClass('disabled');
+        
 
         if ($scope.selButton != null && $scope.selButton[0] != btn[0]) {
           $scope.selButton.removeClass('selected');
@@ -357,7 +364,7 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
 
       $scope.CalculateMonth();
 
-      if ($scope.orientation == null) $scope.orientation = 'portrait';
+      //if ($scope.orientation == null) $scope.orientation = 'portrait';
 
       $scope.Months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
       $scope.ShortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
@@ -388,6 +395,31 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         });
 
       };
+      
+      $scope.dayIsDisabled = function( day ){
+        
+        var sdate = new Date($scope.selYear, $scope.selMonth, day);
+        
+        
+        if( $attr.minDate ){
+          $attr.minDate = $attr.minDate.replace(/['"]+/g, '')
+          var min_date = new Date($attr.minDate);          
+          if( sdate < min_date ){
+            return true;
+          }
+        }
+        
+        
+        if( $attr.maxDate ){
+          $attr.maxDate = $attr.maxDate.replace(/['"]+/g, '')
+          var max_date = new Date($attr.maxDate);
+          if( sdate > max_date ){
+            return true;
+          }
+        }
+        
+        return false
+      }
 
       $scope.NowClick = function ($event) {
         $event.preventDefault();
@@ -431,25 +463,25 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         $scope.CalculateMonth($scope.selMonth);
       });
 
-      $scope.currentOrientation = ($mdMedia('(max-width: 655px)') ? 'portrait' : $scope.orientation);
-      $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
-      $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
+      // $scope.currentOrientation = ($mdMedia('(max-width: 655px)') ? 'portrait' : $scope.orientation);
+      // $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
+      // $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
 
       $scope.$watch(function () {
         return $mdMedia('(max-width: 655px)');
       }, function (isSmall) {
-        if (isSmall) {
-          // In small profile, will be portrait no matter what was originally specified
-          $scope.currentOrientation = 'portrait';
-        } else {
-          $scope.currentOrientation = $scope.orientation;
-        }
+        // if (isSmall) {
+        //   $scope.currentOrientation = 'portrait';
+        // } else {
+        //   $scope.currentOrientation = $scope.orientation;
+        // }
         $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
         $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
       });
 
       $scope.BackMonth = function ($event) {
         $event.preventDefault();
+        
 
         var newm = $scope.selMonth - 1;
         var newy = $scope.selYear;
@@ -458,7 +490,18 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
           newm += 12;
           newy--;
         }
-
+        
+        if( $attr.minDate ){
+          $attr.minDate = $attr.minDate.replace(/['"]+/g, '')
+          var min_date = new Date($attr.minDate);
+          
+          min_date = new Date(min_date.getFullYear(), min_date.getMonth(), 1)
+          var nuewd = new Date( newy, newm );
+          if( nuewd < min_date ){
+            return false;
+          }
+        }
+        
         $scope.selMonth = newm;
         $scope.selYear = newy;
 
@@ -475,7 +518,17 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
           newm %= 12;
           newy++;
         }
-
+        if( $attr.maxDate ){
+          $attr.maxDate = $attr.maxDate.replace(/['"]+/g, '')
+          var max_date = new Date($attr.maxDate);
+          
+          max_date = new Date(max_date.getFullYear(), max_date.getMonth(), 1)
+          var nuewd = new Date( newy, newm );
+          if( nuewd > max_date ){
+            return false;
+          }
+        }
+        
         $scope.selMonth = newm;
         $scope.selYear = newy;
 
@@ -521,37 +574,37 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         </div>\
         \
         <div class="monthpanel">\
-        <md-button class="modal-md-dp-daybtn firstday" ng-click="DayClick($event,1)" ng-style="{\'margin-left\': (selFirstDayOfMonth * firstLead + firstEdge) + \'rem\'}" Day="1">1</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,2)" Day="2">2</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,3)" Day="3">3</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,4)" Day="4">4</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,5)" Day="5">5</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,6)" Day="6">6</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,7)" Day="7">7</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,8)" Day="8">8</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,9)" Day="9">9</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,10)" Day="10">10</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,11)" Day="11">11</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,12)" Day="12">12</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,13)" Day="13">13</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,14)" Day="14">14</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,15)" Day="15">15</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,16)" Day="16">16</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,17)" Day="17">17</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,18)" Day="18">18</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,19)" Day="19">19</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,20)" Day="20">20</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,21)" Day="21">21</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,22)" Day="22">22</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,23)" Day="23">23</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,24)" Day="24">24</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,25)" Day="25">25</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,26)" Day="26">26</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,27)" Day="27">27</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,28)" Day="28">28</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,29)" ng-show="selLastDateOfMonth >= 29" Day="29">29</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,30)" ng-show="selLastDateOfMonth >= 30" Day="30">30</md-button>\
-        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,31)" ng-show="selLastDateOfMonth >= 31" Day="31">31</md-button>\
+        <md-button class="modal-md-dp-daybtn firstday" ng-click="DayClick($event,1)" ng-style="{\'margin-left\': (selFirstDayOfMonth * firstLead + firstEdge) + \'rem\'}" Day="1" ng-disabled="dayIsDisabled(1)">1</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,2)" Day="2" ng-disabled="dayIsDisabled(2)">2</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,3)" Day="3" ng-disabled="dayIsDisabled(3)">3</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,4)" Day="4" ng-disabled="dayIsDisabled(4)">4</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,5)" Day="5" ng-disabled="dayIsDisabled(5)">5</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,6)" Day="6" ng-disabled="dayIsDisabled(6)">6</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,7)" Day="7" ng-disabled="dayIsDisabled(7)">7</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,8)" Day="8" ng-disabled="dayIsDisabled(8)">8</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,9)" Day="9" ng-disabled="dayIsDisabled(9)">9</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,10)" Day="10" ng-disabled="dayIsDisabled(10)">10</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,11)" Day="11" ng-disabled="dayIsDisabled(11)">11</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,12)" Day="12" ng-disabled="dayIsDisabled(12)">12</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,13)" Day="13" ng-disabled="dayIsDisabled(13)">13</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,14)" Day="14" ng-disabled="dayIsDisabled(14)">14</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,15)" Day="15" ng-disabled="dayIsDisabled(15)">15</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,16)" Day="16" ng-disabled="dayIsDisabled(16)">16</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,17)" Day="17" ng-disabled="dayIsDisabled(17)">17</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,18)" Day="18" ng-disabled="dayIsDisabled(18)">18</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,19)" Day="19" ng-disabled="dayIsDisabled(19)">19</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,20)" Day="20" ng-disabled="dayIsDisabled(20)">20</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,21)" Day="21" ng-disabled="dayIsDisabled(21)">21</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,22)" Day="22" ng-disabled="dayIsDisabled(22)">22</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,23)" Day="23" ng-disabled="dayIsDisabled(23)">23</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,24)" Day="24" ng-disabled="dayIsDisabled(24)">24</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,25)" Day="25" ng-disabled="dayIsDisabled(25)">25</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,26)" Day="26" ng-disabled="dayIsDisabled(26)">26</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,27)" Day="27" ng-disabled="dayIsDisabled(27)">27</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,28)" Day="28" ng-disabled="dayIsDisabled(28)">28</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,29)" ng-show="selLastDateOfMonth >= 29" Day="29" ng-disabled="dayIsDisabled(29)">29</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,30)" ng-show="selLastDateOfMonth >= 30" Day="30" ng-disabled="dayIsDisabled(30)">30</md-button>\
+        <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,31)" ng-show="selLastDateOfMonth >= 31" Day="31" ng-disabled="dayIsDisabled(31)">31</md-button>\
         </div>\
         </div>\
         ';

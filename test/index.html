@@ -24,14 +24,20 @@
                     </div>
                     
                     <div >
-                        <modal-md-datepicker flex ng-model="user.start_date" placeholder="Select start date"></modal-md-datepicker>
+                        <md-input-container class="md-block" flex-gt-xs>
+                            <label>Start date</label>
+                            <modal-md-datepicker flex ng-model="user.start_date"></modal-md-datepicker>
+                        </md-input-container>
                     </div>
                     <div >
-                        <modal-md-datepicker flex ng-model="user.end_date" placeholder="Select end date"></modal-md-datepicker>
+                        <md-input-container class="md-block" flex-gt-xs>
+                            <label>End date</label>
+                            <modal-md-datepicker flex ng-model="user.end_date" date-format="dd MMMM yyyy" min-date="{{user.start_date}}" max-date="{{user.max_date}}" ></modal-md-datepicker>
+                        </md-input-container>
                     </div>
                     
                     <div layout="row" layout-align="center center">
-                        <md-button class="md-primary md-raised"> Save </md-button>
+                        <md-button class="md-primary md-raised" ng-click="saveData($event)"> Save </md-button>
                     </div>
                 </div>
                 
@@ -61,7 +67,13 @@
 
 
     app_.controller('testCtrl', function ( $scope, $http ){
-	
+	    $scope.user = {};
+        $scope.user.name = 'User name';
+        $scope.user.start_date = new Date();
+        
+        $scope.saveData = function( e ){
+            console.log($scope.user);
+        }
     });
   </script>
   

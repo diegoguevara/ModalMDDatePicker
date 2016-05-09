@@ -1,6 +1,8 @@
 # ModalMDDatePicker
 Angular Material Design DatePicker Component
 
+[live demo](https://jsfiddle.net/diegoguevara/7fatr9go/)
+
 ## Installing
 
 ### bower
@@ -23,7 +25,6 @@ Angular Material Design DatePicker Component
 
 ```js
 var app_ = angular.module('app',[
-    'ngAnimate',
     'ngMaterial',
     ...
     'mdThemeColors', 
@@ -40,3 +41,17 @@ var app_ = angular.module('app',[
 ## Demo 
 
 [live demo](https://jsfiddle.net/diegoguevara/7fatr9go/)
+
+## options
+
+**date-format:** `string` format date string Ej. 'dd MMMM yyyy'
+
+**min-date:** `Date` Min Date 
+
+**max-date:** `Date` Max Date 
+
+Example: [test/index.html](test/index.html)
+
+```html
+<modal-md-datepicker flex ng-model="user.end_date" date-format="dd MMMM yyyy" min-date="{{user.start_date}}" max-date="{{user.max_date}}" ></modal-md-datepicker>
+```
