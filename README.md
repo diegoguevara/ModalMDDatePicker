@@ -35,7 +35,7 @@ var app_ = angular.module('app',[
 ## Use
 
 ```html
-<modal-md-datepicker ng-model="selectedDate" placeholder="Select a date "></modal-md-datepicker>
+<modal-md-datepicker ng-model="selectedDate" ></modal-md-datepicker>
 ```
 
 ## Demo 
