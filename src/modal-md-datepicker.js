@@ -3,7 +3,7 @@
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
 * Updated 2016.05
-* version 1.0.6
+* version 1.0.7
 */
 
 
@@ -198,7 +198,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           margin-top: -0.1rem;\
           box-sizing: border-box;\
           top: 7px;\
-	        height: 16.2rem;\
+          height: 16.2rem;\
         }\
         ';
         
@@ -315,14 +315,6 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         var tempday = new Date($scope.selYear, $scope.selMonth, 1);
         var fday = tempday.getDay();
         var ldaynum = new Date($scope.selYear, $scope.selMonth + 1, 0).getDate();
-        //console.log( tempday.getTime()  ) ;
-        
-        // $attr.minDate = $attr.minDate.replace(/['"]+/g, '')
-        // console.log( $attr.minDate );
-        // var ttaa = Date.parse($attr.minDate);
-        // console.log( ttaa )
-        // console.log('aa')
-        // console.log($attr.minDate)
         
         $scope.selFirstDayOfMonth = fday;
         $scope.selLastDateOfMonth = ldaynum;
@@ -339,8 +331,7 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
           $scope.selButton.removeClass('selected');
         }
         $scope.selButton = btn;
-
-        // If the currently selected month and year match today's month and year, ensure that the matching day button has the 'today' class; otherwise, remove it.
+        
         var todaybtn = angular.element(document.querySelector('.jmddp-' + $scope.serial + ' [Day="' + $scope.todaysDate + '"]'));
         if ($scope.todaysMonth == $scope.selMonth && $scope.todaysYear == $scope.selYear) {
           todaybtn.addClass('today');
@@ -356,20 +347,17 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       $scope.todaysYear = $scope.Today.getFullYear();
 
       if ($scope.ngModel == null) $scope.ngModel = $scope.Today;
-      $scope.selDate = $scope.ngModel;
+      $scope.selDate = new Date($scope.ngModel);
       $scope.selMonth = $scope.selDate.getMonth();
       $scope.selDay = $scope.selDate.getDate();
       $scope.selYear = $scope.selDate.getFullYear();
       $scope.selButton = null;
 
       $scope.CalculateMonth();
-
-      //if ($scope.orientation == null) $scope.orientation = 'portrait';
-
+      
       $scope.Months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
       $scope.ShortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-
+      
       $scope.DayClick = function ($event, day) {
         $event.preventDefault();
 
@@ -442,7 +430,7 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
 
       $scope.$watch('ngModel', function (newValue) {
         if (newValue == null) return;
-        $scope.selDate = newValue;
+        $scope.selDate = new Date(newValue);
         $scope.selYear = $scope.selDate.getFullYear();
         $scope.selMonth = $scope.selDate.getMonth();
         $scope.selDay = $scope.selDate.getDate();
@@ -463,18 +451,11 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         $scope.CalculateMonth($scope.selMonth);
       });
 
-      // $scope.currentOrientation = ($mdMedia('(max-width: 655px)') ? 'portrait' : $scope.orientation);
-      // $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
-      // $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
-
+      
       $scope.$watch(function () {
         return $mdMedia('(max-width: 655px)');
       }, function (isSmall) {
-        // if (isSmall) {
-        //   $scope.currentOrientation = 'portrait';
-        // } else {
-        //   $scope.currentOrientation = $scope.orientation;
-        // }
+      
         $scope.firstLead = ($scope.currentOrientation == 'landscape' ? 2.9 : 2.75);
         $scope.firstEdge = ($scope.currentOrientation == 'landscape' ? 0.45 : 0.1);
       });
