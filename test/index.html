@@ -3,51 +3,87 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+  
 </head>
 <body ng-app="app" ng-controller="testCtrl" ng-cloak layout="column" class="md-padding" >
     
-    <div>
-        
-    </div>
     <div layout="row" layout-align="center center">
-        <md-card flex="50">
-            <md-card-title>
-                <h3> ModalMDDatepicker Example</h3>
-            </md-card-title>
-            <md-card-content >
-                <div layout="column">
-                    <div >
-                        <md-input-container class="md-block" flex-gt-xs>
-                            <label>First Name</label>
-                            <input ng-model="user.name" >
-                        </md-input-container>
+        <div flex="50">
+            <md-card>
+                <md-card-title>
+                    <h3 >modal-md-datepicker</h3>
+                </md-card-title>
+                <md-card-content >
+                    <div layout="column">
+                        <div >
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Default Input</label>
+                                <input ng-model="frmdata.name" >
+                            </md-input-container>
+                        </div>
+                        
+                        <div>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Default date</label>
+                                <modal-md-datepicker flex ng-model="frmdata.default_date"></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        <div>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Format date</label>
+                                <modal-md-datepicker flex ng-model="frmdata.format_date" date-format="dd MMMM yyyy"></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        <div>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Min date</label>
+                                <modal-md-datepicker flex ng-model="frmdata.min_date" min-date="{{min_date}}" ></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        <div>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Max date</label>
+                                <modal-md-datepicker flex ng-model="frmdata.max_date" max-date="{{max_date}}" ></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        
+                        <div >
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>With Option Lang</label>
+                                <modal-md-datepicker flex ng-model="frmdata.woptions_date"  options="dp_options_en"></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        <div >
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Define Month and day names in Italian</label>
+                                <modal-md-datepicker flex ng-model="frmdata.woptions2_date"  options="dp_options"></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        
+                        
+                        <div layout="row" layout-align="center center">
+                            <md-button class="md-primary md-raised" ng-click="saveData($event)"> Save </md-button>
+                        </div>
                     </div>
                     
-                    <div >
-                        <md-input-container class="md-block" flex-gt-xs>
-                            <label>Start date</label>
-                            <modal-md-datepicker flex ng-model="user.start_date"></modal-md-datepicker>
-                        </md-input-container>
-                    </div>
-                    <div >
-                        <md-input-container class="md-block" flex-gt-xs>
-                            <label>End date</label>
-                            <modal-md-datepicker flex ng-model="user.end_date" date-format="dd MMMM yyyy" min-date="{{user.start_date}}" max-date="{{user.max_date}}" ></modal-md-datepicker>
-                        </md-input-container>
+                    <div layout="row">
+                        
+<pre>
+{{frmdata | json}}
+</pre>
                     </div>
                     
-                    <div layout="row" layout-align="center center">
-                        <md-button class="md-primary md-raised" ng-click="saveData($event)"> Save </md-button>
-                    </div>
-                </div>
-                
-                <div layout="row">
                     
-                </div>
-                
-                
-            </md-card-content>
-        </md-card>
+                </md-card-content>
+            </md-card>
+        </div>
+        
     </div>
   </div>
   <!-- Angular Material requires Angular.js Libraries -->
@@ -59,6 +95,12 @@
   <!-- Angular Material Library -->
   <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
   
+  
+  <!-- Important define Angular i18n for toolbar date language --> 
+  <script src="https://code.angularjs.org/1.2.5/i18n/angular-locale_es-co.js"></script>
+  
+  
+  
   <script src="../src/modal-md-datepicker.js"></script>
   
   <!-- Your application bootstrap  -->
@@ -67,20 +109,29 @@
 
 
     app_.controller('testCtrl', function ( $scope, $http ){
-	    $scope.user = {};
-        $scope.user.name = 'User name';
-        $scope.user.start_date = new Date();
+	    $scope.frmdata = {};
+        
+        $scope.min_date = new Date();
+        
+        $scope.max_date = new Date();
+        $scope.max_date.setMonth($scope.max_date.getMonth() + 3);
+        
+        
+        $scope.dp_options_en = {
+            lang : 'en'
+        }
+        
+        $scope.dp_options = {
+            sort_days : ['D', 'L', 'M', 'M', 'G', 'V', 'S'],
+            months : ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
+            short_months : ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+        }
         
         $scope.saveData = function( e ){
-            console.log($scope.user);
+            console.log($scope.frmdata);
         }
     });
   </script>
   
 </body>
 </html>
-
-<!--
-Copyright 2016 Google Inc. All Rights Reserved. 
-Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
--->

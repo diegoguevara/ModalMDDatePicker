@@ -3,7 +3,7 @@
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
 * Updated 2016.05
-* version 1.0.8
+* version 1.0.9
 */
 
 
@@ -92,10 +92,13 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       dateFormat: '@',
       minDate: '@',
       maxDate: '@',
-      readOnly:'@'
+      readOnly:'@',
+      options : '='
     },
     template: '<input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" ng-readonly="modal_md_readonly"/>',
     link: function ($scope, $element, $attr, $ctrl) {
+      var dp_options = $scope.options;
+          
       $scope.modal_md_readonly = false;
           if( $attr.readOnly ){
             $scope.modal_md_readonly = $attr.readOnly;
@@ -253,10 +256,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           $scope.serial = serial;
           $scope.minDate = $attr.minDate;
           $scope.maxDate = $attr.maxDate;
-          
-          
-          
-          
+          $scope.options = dp_options;
           
           $scope.NowClick = function ($event) {
             $event.preventDefault();
@@ -282,7 +282,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
         var dlgOpts = {
           template: '<md-dialog class="modal-md-dp-modal" ng-attr-id="mddpdlg-{{serial}}">\
       <div class="popupDialogContent" style="overflow:hidden">\
-      <modal-md-datepicker-calendar ng-model="DialogSelectedDate" submitclick="SaveClick" cancelclick="CancelClick" min-date="{{minDate}}" max-date="{{maxDate}}"></modal-md-datepicker-calendar>\
+      <modal-md-datepicker-calendar ng-model="DialogSelectedDate" submitclick="SaveClick" cancelclick="CancelClick" min-date="{{minDate}}" max-date="{{maxDate}}" options="options"></modal-md-datepicker-calendar>\
       </div>\
       </md-dialog>',
           controller: dlgCtrl,
@@ -316,7 +316,8 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       submitclick: '&',
       cancelclick: '&',
       minDate : '@',
-      maxDate : '@'
+      maxDate : '@',
+      options : '='
     },
     link: function ($scope, $element, $attr, $ctrl) {
       $scope.serial = Math.floor(Math.random() * 10000000000000000);
@@ -367,6 +368,23 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       
       $scope.Months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
       $scope.ShortMonths = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      $scope.ShortDays = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
+      
+      if( $scope.options && $scope.options.lang === 'en' ){
+        $scope.ShortDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        $scope.Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $scope.ShortMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      }
+      
+      if( $scope.options && $scope.options.sort_days ){
+        $scope.ShortDays = $scope.options.sort_days;
+      }
+      if( $scope.options && $scope.options.months ){
+        $scope.Months = $scope.options.months;
+      }
+      if( $scope.options && $scope.options.short_months ){
+        $scope.ShortMonths = $scope.options.short_months;
+      }
       
       $scope.DayClick = function ($event, day) {
         $event.preventDefault();
@@ -554,13 +572,13 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         \
         <div>\
         <div class="weekdayheader">\
-        <div class="weekdaylabel">D</div>\
-        <div class="weekdaylabel">L</div>\
-        <div class="weekdaylabel">M</div>\
-        <div class="weekdaylabel">M</div>\
-        <div class="weekdaylabel">J</div>\
-        <div class="weekdaylabel">V</div>\
-        <div class="weekdaylabel">S</div>\
+        <div class="weekdaylabel">{{ShortDays[0]}}</div>\
+        <div class="weekdaylabel">{{ShortDays[1]}}</div>\
+        <div class="weekdaylabel">{{ShortDays[2]}}</div>\
+        <div class="weekdaylabel">{{ShortDays[3]}}</div>\
+        <div class="weekdaylabel">{{ShortDays[4]}}</div>\
+        <div class="weekdaylabel">{{ShortDays[5]}}</div>\
+        <div class="weekdaylabel">{{ShortDays[6]}}</div>\
         </div>\
         </div>\
         \
