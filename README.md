@@ -50,6 +50,8 @@ var app_ = angular.module('app',[
 
 **max-date:** `Date` Max Date 
 
+**read-only** `bool` true or false 
+
 Example: [test/index.html](test/index.html)
 
 ```html

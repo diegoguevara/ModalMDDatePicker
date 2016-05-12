@@ -3,7 +3,7 @@
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
 * Updated 2016.05
-* version 1.0.7
+* version 1.0.8
 */
 
 
@@ -91,10 +91,16 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       orientation: '@',
       dateFormat: '@',
       minDate: '@',
-      maxDate: '@'
+      maxDate: '@',
+      readOnly:'@'
     },
-    template: '<input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" />',
+    template: '<input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" ng-readonly="modal_md_readonly"/>',
     link: function ($scope, $element, $attr, $ctrl) {
+      $scope.modal_md_readonly = false;
+          if( $attr.readOnly ){
+            $scope.modal_md_readonly = $attr.readOnly;
+          }
+          
       function formatter(value) {
         if (value) {
           return value;
@@ -247,6 +253,10 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           $scope.serial = serial;
           $scope.minDate = $attr.minDate;
           $scope.maxDate = $attr.maxDate;
+          
+          
+          
+          
           
           $scope.NowClick = function ($event) {
             $event.preventDefault();
