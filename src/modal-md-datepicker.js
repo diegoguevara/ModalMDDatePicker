@@ -210,6 +210,8 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
           top: 7px;\
           height: 16.2rem;\
         }\
+        .repeated-item{\
+        }\
         ';
         
         style.text(styleText);
@@ -322,6 +324,9 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       options : '='
     },
     link: function ($scope, $element, $attr, $ctrl) {
+      
+      
+      
       $scope.serial = Math.floor(Math.random() * 10000000000000000);
 
       $scope.CalculateMonth = function () {
@@ -548,17 +553,43 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         $scope.CalculateMonth($scope.selMonth);
       };
       
+      
+      $scope.year_list = [];
+      $scope.yearTopIndex = 30;
+      
+      for( var i = new Date().getFullYear()+30; i >= 1900; i-- ){
+        $scope.year_list.push(i);
+      }
+      
+      $scope.selyearPanel = false;
+      
+      $scope.setSelectedYear = function(itm_) {
+        console.log(itm_);
+        $scope.selYear = itm_;
+        $scope.selyearPanel = false;  
+      }
+      
+      
+      
+      
       var _BuildCalendar = function () {
         $scope.title_format = 'EEE, MMM d';
         if( $scope.options && $scope.options.title_date_format ){
           $scope.title_format = $scope.options.title_date_format;
         }
         
+        var ytext = '<md-virtual-repeat-container style="height: 200px; width: 100%; " md-top-index="yearTopIndex">\
+                      <div md-virtual-repeat="item in year_list" \
+                          class="repeated-item" flex >\
+                        <md-button style="width:95%;" ng-click="setSelectedYear(item)">{{item}}</md-button>\
+                      </div>\
+                    </md-virtual-repeat-container>';
+        
         var caltext = '\
         <div layout="column" class="masterdatepicker jmddp-'+ $scope.serial + '" >\
         <md-toolbar>\
         <div class="md-toolbar-tools1 md-padding" layout="column" >\
-        <div class="md-subhead">{{selYear}}</div>\
+        <div class="md-subhead" ng-click="selyearPanel = !selyearPanel">{{selYear}}</div>\
         <div class="md-headline">{{selDate | date:\'' + $scope.title_format + '\'}}</div>\
         </div>\
         </md-toolbar>\
@@ -572,7 +603,7 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         </div>\
         <div flex="5"></div>\
         <div flex="45">\
-        <input type="number" ng-model="selYear" class=" modal-md-dp-input" />\
+        <input type="number" ng-model="selYear" class=" modal-md-dp-input" ng-click="selyearPanel = !selyearPanel"/>\
         </div>\
         </div>\
         <md-button class="md-icon-button right" ng-click="ForwardMonth($event)" aria-label="Forward 1 Month"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></md-button>\
@@ -590,7 +621,7 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         </div>\
         </div>\
         \
-        <div class="monthpanel">\
+        <div class="monthpanel" ng-if="!selyearPanel">\
         <md-button class="modal-md-dp-daybtn firstday" ng-click="DayClick($event,1)" ng-style="{\'margin-left\': (selFirstDayOfMonth * firstLead + firstEdge) + \'rem\'}" Day="1" ng-disabled="dayIsDisabled(1)">1</md-button>\
         <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,2)" Day="2" ng-disabled="dayIsDisabled(2)">2</md-button>\
         <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,3)" Day="3" ng-disabled="dayIsDisabled(3)">3</md-button>\
@@ -623,8 +654,13 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,30)" ng-show="selLastDateOfMonth >= 30" Day="30" ng-disabled="dayIsDisabled(30)">30</md-button>\
         <md-button class="modal-md-dp-daybtn" ng-click="DayClick($event,31)" ng-show="selLastDateOfMonth >= 31" Day="31" ng-disabled="dayIsDisabled(31)">31</md-button>\
         </div>\
+        <div ng-if="selyearPanel">\
+       ' + ytext + '\
+        </div>\
         </div>\
         ';
+        
+        
 
 
         var newbody = angular.element(caltext);
@@ -635,6 +671,8 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
       };
 
       _BuildCalendar();
+      
+      
     }
   };
 }]);
