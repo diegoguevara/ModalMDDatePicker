@@ -25,8 +25,22 @@
                         
                         <div>
                             <md-input-container class="md-block" flex-gt-xs>
-                                <label>Format date</label>
+                                <label>Lock input field</label>
+                                <modal-md-datepicker flex ng-model="frmdata.locked_date" locked="true"></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        <div>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Format input date</label>
                                 <modal-md-datepicker flex ng-model="frmdata.format_date" date-format="dd MMMM yyyy"></modal-md-datepicker>
+                            </md-input-container>
+                        </div>
+                        
+                        <div>
+                            <md-input-container class="md-block" flex-gt-xs>
+                                <label>Format title date</label>
+                                <modal-md-datepicker flex ng-model="frmdata.format_title_date" options="format_title_options"></modal-md-datepicker>
                             </md-input-container>
                         </div>
                         
@@ -110,6 +124,9 @@
         $scope.max_date = new Date();
         $scope.max_date.setMonth($scope.max_date.getMonth() + 3);
         
+        $scope.format_title_options = {
+            title_date_format : 'EEEE, MMMM d'
+        }
         
         $scope.dp_options_en = {
             lang : 'en'
