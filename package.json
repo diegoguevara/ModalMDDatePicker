@@ -1,6 +1,6 @@
 {
   "name": "modalmddatepicker",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Angular Material Datepicker Component",
   "main": "modal-md-datepicker.min.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "url": "https://github.com/diegoguevara/ModalMDDatePicker/issues"
   },
   "homepage": "https://github.com/diegoguevara/ModalMDDatePicker#readme",
-  "dev-dependencies": {
+  "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-ng-annotate": "^2.0.0",
     "gulp-rename": "^1.2.2",

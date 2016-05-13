@@ -3,7 +3,7 @@
 * @author Diego Guevara - github.com/diegoguevara
 * Created 2016.04
 * Updated 2016.05
-* version 1.0.12
+* version 1.0.13
 */
 
 
@@ -240,7 +240,8 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
         if (newValue != null) {
           //$scope.SelectedDateText = $filter('date')(newValue, 'M/d/yyyy');
           if( !$attr.dateFormat ){
-            $attr.dateFormat = 'M/d/yyyy';
+            //$attr.dateFormat = 'M/d/yyyy';
+            $attr.dateFormat = 'dd/MM/yyyy';
           }
           $scope.SelectedDateText = $filter('date')(newValue, $attr.dateFormat);
         } else {
