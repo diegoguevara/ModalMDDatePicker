@@ -52,11 +52,12 @@ var app_ = angular.module('app',[
 
 ### Format date
 
-Attribute `date-format`: `String` with plain javascript date format.
+Attribute `date-format`: `String` with plain javascript date format. Format input text result date.
 
 ```html
 <modal-md-datepicker ng-model="selectedDate" date-format="dd MMMM yyyy"></modal-md-datepicker>
 ```
+
 
 ### Min Date
 
@@ -117,6 +118,19 @@ $scope.dp_options = {
 
 Toolbar title date language is defined by `angular-locale` library. [More info](https://docs.angularjs.org/guide/i18n)
 
+
+#### `title_date_format` : optional
+
+Allow to format component title date, with plain javascript date format.
+
+```html
+<modal-md-datepicker ng-model="selectedDate" options="format_title_options"></modal-md-datepicker>
+```
+```js
+$scope.format_title_options = {
+    title_date_format : 'EEEE, MMMM d'
+};
+```
 
 
 
