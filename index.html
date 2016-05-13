@@ -1,156 +1,173 @@
-<html lang="en" >
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Angular Material style sheet -->
-  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
-  
-</head>
-<body ng-app="app" ng-controller="testCtrl" ng-cloak layout="column" class="md-padding" >
-    
-    <div layout="row" layout-align="center center">
-        <div flex="50">
-            <md-card>
-                <md-card-title>
-                    <div layout="column">
-                        <h3 >modal-md-datepicker</h3>
-                        <div layout="row">
-                            <md-button href="https://github.com/diegoguevara/ModalMDDatePicker">View on GitHub</md-button>
-                            <md-button href="https://github.com/diegoguevara/ModalMDDatePicker/zipball/master">Download .zip</md-button>
-                            <md-button href="https://github.com/diegoguevara/ModalMDDatePicker/tarball/master">Download .tar.gz</md-button>
-                        </div>
-                    </div>
-                    
-                </md-card-title>
-                <md-card-content >
-                    <div layout="column">
-                        
-                        <div>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Default date</label>
-                                <modal-md-datepicker flex ng-model="frmdata.default_date"></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        <div>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Lock input field</label>
-                                <modal-md-datepicker flex ng-model="frmdata.locked_date" locked="true"></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        <div>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Format input date</label>
-                                <modal-md-datepicker flex ng-model="frmdata.format_date" date-format="dd MMMM yyyy"></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        <div>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Format title date</label>
-                                <modal-md-datepicker flex ng-model="frmdata.format_title_date" options="format_title_options"></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        <div>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Min date</label>
-                                <modal-md-datepicker flex ng-model="frmdata.min_date" min-date="{{min_date}}" ></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        <div>
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Max date</label>
-                                <modal-md-datepicker flex ng-model="frmdata.max_date" max-date="{{max_date}}" ></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        
-                        <div >
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>With Option Lang</label>
-                                <modal-md-datepicker flex ng-model="frmdata.woptions_date"  options="dp_options_en"></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        <div >
-                            <md-input-container class="md-block" flex-gt-xs>
-                                <label>Define Month and day names in Italian</label>
-                                <modal-md-datepicker flex ng-model="frmdata.woptions2_date"  options="dp_options"></modal-md-datepicker>
-                            </md-input-container>
-                        </div>
-                        
-                        
-                        
-                        <div layout="row" layout-align="center center">
-                            <md-button class="md-primary md-raised" ng-click="saveData($event)"> Save </md-button>
-                        </div>
-                    </div>
-                    
-                    <div layout="row">
-                        
-<pre>
-{{frmdata | json}}
-</pre>
-                    </div>
-                    
-                    
-                </md-card-content>
-            </md-card>
-        </div>
-        
-    
-  </div>
-  <!-- Angular Material requires Angular.js Libraries -->
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Modalmddatepicker by diegoguevara</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Modalmddatepicker</h1>
+      <h2 class="project-tagline">Angular Material Design DatePicker Component</h2>
+      <a href="https://github.com/diegoguevara/ModalMDDatePicker" class="btn">View on GitHub</a>
+      <a href="https://github.com/diegoguevara/ModalMDDatePicker/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/diegoguevara/ModalMDDatePicker/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-  <!-- Angular Material Library -->
-  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-  
-  
-  <!-- Important define Angular i18n for toolbar date language --> 
-  <script src="https://code.angularjs.org/1.2.5/i18n/angular-locale_es-co.js"></script>
-  
-  
-  
-  <script src="https://cdn.rawgit.com/diegoguevara/ModalMDDatePicker/c3c0b9ed3b60411acd0813a4e9ccf10edc9a4fe5/modal-md-datepicker.min.js"></script>
-  
-  <!-- Your application bootstrap  -->
-  <script type="text/javascript">    
-    var app_ = angular.module('app',['ngMaterial', 'mdThemeColors', 'ModalDatePicker']);
+    <section class="main-content">
+      <h1>
+<a id="angular-material-datepicker" class="anchor" href="#angular-material-datepicker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Angular Material DatePicker</h1>
 
+<p>Just another native <a href="https://material.angularjs.org">Angular Material-Design</a>  DatePicker Component. <a href="https://jsfiddle.net/diegoguevara/7fatr9go/">see demo</a></p>
 
-    app_.controller('testCtrl', function ( $scope, $http ){
-        $scope.frmdata = {};
-        
-        $scope.min_date = new Date();
-        
-        $scope.max_date = new Date();
-        $scope.max_date.setMonth($scope.max_date.getMonth() + 3);
-        
-        $scope.format_title_options = {
-            title_date_format : 'EEEE, MMMM d'
-        }
-        
-        $scope.dp_options_en = {
-            lang : 'en'
-        }
-        
-        $scope.dp_options = {
-            sort_days : ['D', 'L', 'M', 'M', 'G', 'V', 'S'],
-            months : ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'],
-            short_months : ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
-        }
-        
-        $scope.saveData = function( e ){
-            console.log($scope.frmdata);
-        }
-    });
-  </script>
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>You can choose your installation method:</p>
+
+<ul>
+<li>bower: <code>bower install modal-md-datePicker --save</code>
+</li>
+<li>npm: <code>npm install modalmddatepicker --save</code>
+</li>
+<li>Download from github: <a href="https://github.com/diegoguevara/ModalMDDatePicker/releases">modal-md-datepicker</a> </li>
+</ul>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
+
+<ul>
+<li>
+<a href="https://material.angularjs.org">angular-material</a> 1.0.7+</li>
+</ul>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Include <strong>modal-md-datepicker.min.js</strong> in your application.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>bower_components/modalmddatePicker/modal-md-datepicker.min.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>Toolbar date language is defined by <code>angular-locale</code> library. </p>
+
+<p>Angular separates number and datetime format rule sets into different files, each file for a particular locale. You can find a list of currently supported locales <a href="https://github.com/angular/angular.js/tree/master/src/ngLocale">here</a>.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>https://code.angularjs.org/1.2.5/i18n/angular-locale_es-co.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<p>Add both <code>mdThemeColors</code> and <code>ModalDatePicker</code> modules as a dependency to your app module.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> app_ <span class="pl-k">=</span> <span class="pl-smi">angular</span>.<span class="pl-en">module</span>(<span class="pl-s"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>,[
+    <span class="pl-s"><span class="pl-pds">'</span>ngMaterial<span class="pl-pds">'</span></span>, <span class="pl-c">// angular material required </span>
+    <span class="pl-k">...</span>
+    <span class="pl-s"><span class="pl-pds">'</span>mdThemeColors<span class="pl-pds">'</span></span>, 
+    <span class="pl-s"><span class="pl-pds">'</span>ModalDatePicker<span class="pl-pds">'</span></span>
+]);</pre></div>
+
+<h3>
+<a id="default-datepicker" class="anchor" href="#default-datepicker" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Default datepicker</h3>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<h3>
+<a id="format-date" class="anchor" href="#format-date" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Format date</h3>
+
+<p>Attribute <code>date-format</code>: <code>String</code> with plain javascript date format. Format input text result date.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">date-format</span>=<span class="pl-s"><span class="pl-pds">"</span>dd MMMM yyyy<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<h3>
+<a id="min-date" class="anchor" href="#min-date" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Min Date</h3>
+
+<p>Attribute <code>min-date</code>: <code>Date</code> javascript date object with min date.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">min-date</span>=<span class="pl-s"><span class="pl-pds">"</span>{{min_date}}<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-smi">min_date</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>();</pre></div>
+
+<h3>
+<a id="max-date" class="anchor" href="#max-date" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Max Date</h3>
+
+<p>Attribute <code>max-date</code>: <code>Date</code> javascript date object with max date.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">max-date</span>=<span class="pl-s"><span class="pl-pds">"</span>{{max_date}}<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-smi">max_date</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">Date</span>();</pre></div>
+
+<h3>
+<a id="locked-input" class="anchor" href="#locked-input" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Locked input</h3>
+
+<p>Attribute <code>locked</code> : <code>bool</code> Locks input field to prevent direct write.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">locked</span>=<span class="pl-s"><span class="pl-pds">"</span>true<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<h3>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Options</h3>
+
+<p>Attribute <code>options</code>: <code>json</code> Object with language attributes.</p>
+
+<p>Allow to define default language or Strings with month and day names.</p>
+
+<h4>
+<a id="lang--optional" class="anchor" href="#lang--optional" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>lang</code> : optional</h4>
+
+<p>Allow to define default language for month and day names in calendar.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">options</span>=<span class="pl-s"><span class="pl-pds">"</span>dp_options<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-smi">dp_options</span> <span class="pl-k">=</span> {
+    lang <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>en<span class="pl-pds">'</span></span> <span class="pl-c">// en, es, default:es</span>
+};</pre></div>
+
+<h4>
+<a id="month-and-day-names--optional" class="anchor" href="#month-and-day-names--optional" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Month and day names : optional</h4>
+
+<p>Allow to define default language for month and day names in calendar.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">options</span>=<span class="pl-s"><span class="pl-pds">"</span>dp_options<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-smi">dp_options</span> <span class="pl-k">=</span> {
+    sort_days <span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>D<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>L<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>M<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>M<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>G<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>V<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>S<span class="pl-pds">'</span></span>],
+    months <span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>Gennaio<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Febbraio<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Marzo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Aprile<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Maggio<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Giugno<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Luglio<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Agosto<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Settembre<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Ottobre<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Novembre<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Dicembre<span class="pl-pds">'</span></span>],
+    short_months <span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">'</span>Gen<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Feb<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Mar<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Apr<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Mag<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Giu<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Lug<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Ago<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Set<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Ott<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Nov<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Dic<span class="pl-pds">'</span></span>]
+}</pre></div>
+
+<p>Toolbar title date language is defined by <code>angular-locale</code> library. <a href="https://docs.angularjs.org/guide/i18n">More info</a></p>
+
+<h4>
+<a id="title_date_format--optional" class="anchor" href="#title_date_format--optional" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>title_date_format</code> : optional</h4>
+
+<p>Allow to format component title date, with plain javascript date format.</p>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span> <span class="pl-e">ng-model</span>=<span class="pl-s"><span class="pl-pds">"</span>selectedDate<span class="pl-pds">"</span></span> <span class="pl-e">options</span>=<span class="pl-s"><span class="pl-pds">"</span>format_title_options<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">modal</span><span class="pl-e">-md-datepicker</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">$scope</span>.<span class="pl-smi">format_title_options</span> <span class="pl-k">=</span> {
+    title_date_format <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>EEEE, MMMM d<span class="pl-pds">'</span></span>
+};</pre></div>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h2>
+
+<p><a href="https://jsfiddle.net/diegoguevara/7fatr9go/">Live Example</a>: Live simple example in jsfiddle.net.</p>
+
+<p><a href="https://github.com/diegoguevara/ModalMDDatePicker/blob/master/test/index.html">test/index.html</a>: Test page included in the project with all options implemented.</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>Released under the terms of the <a href="https://raw.githubusercontent.com/diegoguevara/ModalMDDatePicker/master/LICENSE">MIT License</a>.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/diegoguevara/ModalMDDatePicker">Modalmddatepicker</a> is maintained by <a href="https://github.com/diegoguevara">diegoguevara</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
   
-</body>
+  </body>
 </html>
