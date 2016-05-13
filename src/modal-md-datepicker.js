@@ -92,7 +92,8 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       dateFormat: '@',
       minDate: '@',
       maxDate: '@',
-      readOnly:'@',
+      //readOnly:'@',
+      locked:'=',
       options : '='
     },
     template: '<input type="text" ng-attr-id="modal-md-dp-directive-{{serial}}" ng-model="SelectedDateText" ng-click="showModalDatePicker($event, SelectedDate)" ng-readonly="modal_md_readonly"/>',
@@ -100,8 +101,8 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       var dp_options = $scope.options;
           
       $scope.modal_md_readonly = false;
-          if( $attr.readOnly ){
-            $scope.modal_md_readonly = $attr.readOnly;
+          if( $scope.locked ){
+            $scope.modal_md_readonly = $scope.locked;
           }
           
       function formatter(value) {
@@ -541,18 +542,24 @@ ModalDatePicker.directive('modalMdDatepickerCalendar', ['$timeout', '$compile', 
         
         $scope.selMonth = newm;
         $scope.selYear = newy;
+        
+        
 
         $scope.CalculateMonth($scope.selMonth);
       };
-      // 
-      // <div class="datelabel">{{selDate | amDateFormat:\'ddd, MMM d\'}}</div>\
+      
       var _BuildCalendar = function () {
+        $scope.title_format = 'EEE, MMM d';
+        if( $scope.options && $scope.options.title_date_format ){
+          $scope.title_format = $scope.options.title_date_format;
+        }
+        
         var caltext = '\
         <div layout="column" class="masterdatepicker jmddp-'+ $scope.serial + '" >\
         <md-toolbar>\
         <div class="md-toolbar-tools1 md-padding" layout="column" >\
         <div class="md-subhead">{{selYear}}</div>\
-        <div class="md-headline">{{selDate | date:\'EEE, MMM d\'}}</div>\
+        <div class="md-headline">{{selDate | date:\'' + $scope.title_format + '\'}}</div>\
         </div>\
         </md-toolbar>\
         <div layout="row" layout-align="center center">\
