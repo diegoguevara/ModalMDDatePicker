@@ -82,6 +82,14 @@ Attribute `max-date`: `Date` javascript date object with max date.
 $scope.max_date = new Date();
 ```
 
+### Locked input
+
+Attribute `locked` : `bool` Locks input field to prevent direct write.
+
+```html
+<modal-md-datepicker ng-model="selectedDate" locked="true"></modal-md-datepicker>
+```
+
 ### Options
 
 Attribute `options`: `json` Object with language attributes.
