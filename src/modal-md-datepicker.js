@@ -287,6 +287,7 @@ ModalDatePicker.directive('modalMdDatepicker', function ($timeout, $filter, $mdD
       </md-dialog>',
           controller: dlgCtrl,
           targetEvent: $event,
+          clickOutsideToClose :true,
           locals: {
             dlgOrientation: $scope.orientation,
             serial: $scope.serial
