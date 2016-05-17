@@ -3,6 +3,20 @@
 
 Just another native [Angular Material-Design](https://material.angularjs.org)  DatePicker Component. [see demo](https://jsfiddle.net/diegoguevara/7fatr9go/)
 
+[![NPM Version][npm-image]][npm-url]
+[![Dependencies][dependencies-image]][dependencies-url]
+[![Dev Depedencies][dev-dependencies-image]][dev-dependencies-url]
+
+
+[npm-image]: https://img.shields.io/npm/v/modalmddatepicker.svg?style=flat
+[npm-url]: https://npmjs.org/package/modalmddatepicker
+
+[dependencies-image]: https://img.shields.io/david/diegoguevara/ModalMDDatepicker.svg?style=flat
+[dependencies-url]: https://david-dm.org/diegoguevara/ModalMDDatepicker
+
+[dev-dependencies-image]: https://img.shields.io/david/dev/diegoguevara/ModalMDDatepicker.svg?style=flat
+[dev-dependencies-url]: https://david-dm.org/diegoguevara/ModalMDDatepicker#info=devDependencies&view=table
+
 
 ## Installation
 
